@@ -24,7 +24,18 @@ class Route
         $request_path = request_uri();
         foreach (self::$routes[request_method()] as $route)
         {
-            if($request_path==$route['path'])
+            $routePath = explode('/',$route['path']);
+            $fullPath = explode('/',$request_path);
+            $params = array();
+            foreach ($routePath as $key=>$item)
+            {
+                    if (preg_match('@{.*?}@s', $item) and isset($fullPath[$key])
+                        and isset($routePath[$key])) {
+                        array_push($params, $fullPath[$key]);
+                        $routePath[$key] = $fullPath[$key];
+                    }
+            }
+            if($request_path==implode('/',$routePath))
             {
                if(is_callable($route['callback']))
                {
@@ -34,7 +45,7 @@ class Route
                        [$controllerName,$method] = explode('@',$route['callback']);
                        $controllerName = '\App\Controllers\\'.$controllerName;
                        $controller = new $controllerName();
-                return    call_user_func_array(array($controller,$method),array());
+                return    call_user_func_array(array($controller,$method),$params);
                    }
 
             }

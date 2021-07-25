@@ -11,6 +11,7 @@ if(!function_exists('dd'))
     function dd($parametrs)
     {
         var_dump($parametrs);
+        exit();
     }
 }
 
