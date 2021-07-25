@@ -1,0 +1,19 @@
+{
+    "name": "mshukurlu/planet",
+    "description": "A new framework for simulation laravel",
+    "authors": [
+        {
+            "name": "Murad Shukurlu",
+            "email": "shukurlu.murad@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "files": [
+            "app/Helper/helper.php"
+        ],
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}
