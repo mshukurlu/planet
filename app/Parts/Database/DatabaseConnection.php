@@ -14,7 +14,7 @@ class DatabaseConnection
 
     public function connect()
     {
-       $instance = PdoDatabaseConnection::getInstance();
+       $instance = $this->connection->getInstance();
        return $instance->connection();
     }
 }
