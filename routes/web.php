@@ -16,7 +16,7 @@ Route::get('/',function (){
 });
 
 Route::get('/db-query',function (){
-    $db_query = (new \App\Parts\Database\Query\DatabaseQueryBuilder(new \App\Parts\Database\Query\PdoQueryBuilder()))
+    $db_query = (new \App\Parts\Database\Query\DatabaseConnectDriverSelector(new \App\Parts\Database\Query\PdoQueryBuilder()))
     ->all();
 
     dd($db_query);
@@ -25,7 +25,9 @@ Route::get('/db-query',function (){
 
 Route::get('/db-test',function (){
   $users = (new Database())->table('users')
-      ->all();
+      ->where('name','=','Murad')
+  ->orWhere('id','=',1)
+      ->get(['id','name']);
 
   print_r($users);
 });
