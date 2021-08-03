@@ -11,16 +11,9 @@ namespace App\Parts\Database\Query;
 class Database
 {
     /**
-     * @var
-     */
-    /**
-     * @var array
-     */
-    protected $table, $result = [];
-    /**
      * @var PdoQueryBuilder
      */
-    private $queryBuilder = null;
+    private $queryBuilder;
 
     /**
      * Database constructor.
@@ -34,65 +27,11 @@ class Database
      * @param $table_name
      * @return $this
      */
-    public function table($table_name)
+    public function table($table_name) : IQuery
     {
       $this->queryBuilder->setTable($table_name);
-        return $this;
+      return  $this->queryBuilder;
     }
 
-    /**
-     * @return mixed
-     */
-    public function all()
-    {
-        return $this->queryBuilder->all($this->table);
-    }
-
-    /**
-     * @param $column
-     * @param $opeator
-     * @param $value
-     * @return $this
-     */
-    public function where($column, $opeator, $value) : PdoQueryBuilder
-    {
-        $this->queryBuilder->where($column, $opeator, $value);
-        return  $this->queryBuilder;
-    }
-
-
-    /**
-     * @param $id
-     */
-    public function find($id)
-    {
-        // TODO: Implement find() method.
-    }
-
-    /**
-     *
-     */
-    public function get($columns = [])
-    {
-       return $this->queryBuilder->get( );
-    }
-
-    /**
-     *
-     */
-    public function query()
-    {
-        // TODO: Implement query() method.
-    }
-
-    /**
-     * @param $table
-     * @param $columns
-     * @param $conditions
-     */
-    public function select($table, $columns, $conditions)
-    {
-        // TODO: Implement select() method.
-    }
 }
 

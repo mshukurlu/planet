@@ -24,10 +24,7 @@ Route::get('/db-query',function (){
 
 
 Route::get('/db-test',function (){
-  $users = (new Database())->table('users')
-      ->where('name','=','Murad')
-  ->orWhere('id','=',1)
-      ->get(['id','name']);
+  $users = (new Database())->table('users')->find(1);
 
   print_r($users);
 });

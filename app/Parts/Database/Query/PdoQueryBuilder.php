@@ -7,11 +7,11 @@ namespace App\Parts\Database\Query;
 use App\Parts\Database\DatabaseConnection;
 use App\Parts\Database\PdoDatabaseConnection;
 
-class PdoQueryBuilder implements IQuery
+class PdoQueryBuilder extends DatabaseQueryAbstract implements IQuery
 {
-    protected $databaseConnection,$table,$where=[];
-    protected $params = [],$columns = [],$limit;
-
+    /**
+     * PdoQueryBuilder constructor.
+     */
     public function __construct()
     {
         $this->databaseConnection = (new DatabaseConnection(
@@ -19,84 +19,50 @@ class PdoQueryBuilder implements IQuery
                                         ->connect();
     }
 
+    /**
+     * @param $table
+     * @return mixed
+     */
     public function all($table)
     {
         $query = $this->databaseConnection->query(sprintf("SELECT * FROM %s",$table));
         return $query->fetchAll();
     }
 
-    public function where($column, $operator, $value)
-    {
-       array_push($this->where,array('column'=>$column,'operator'=>$operator,'value'=>$value,'type'=>' and '));
 
-       return $this;
-    }
-
-    public function orWhere($column, $operator, $value)
-    {
-        array_push($this->where,array('column'=>$column,'operator'=>$operator,'value'=>$value,'type'=>' or '));
-
-        return $this;
-    }
-
-    public function find($id)
-    {
-        // TODO: Implement find() method.
-    }
-
+    /**
+     * @param array $columns
+     * @return mixed
+     */
     public function get($columns = [])
     {
       $this->columns  = $columns;
       $getCompiledSql = $this->compileSelectSql();
 
-      $statement = $this->databaseConnection->prepare($getCompiledSql);
-
-      foreach ($this->params as $param)
-      {
-          $statement->bindParam($param['param'],$param['value']);
-      }
-      $statement->execute();
+      $statement = $this->prepareStatement($getCompiledSql,$this->params);
 
       return $statement->fetchAll();
     }
 
-    public function compileSelectSql()
+    public function first($columns = [])
     {
-        $i=0;
-        $conditions = '';
-        foreach ($this->where as $condition)
-        {
-            if(count($this->where)>$i && $i>0)
-            {
-                $conditions .= $condition['type'];
-            }
-            $conditions .= ' '.$condition['column'].' '.$condition['operator'].' :'.$condition['column'];
-            $i++;
+        $this->columns  = $columns;
+        $getCompiledSql = $this->compileSelectSql();
 
-           $this->params[] = array('param'=>':'.$condition['column'],
-               'value'=>$condition['value']);
+        $statement = $this->prepareStatement($getCompiledSql,$this->params);
 
-        }
-        $columns = count($this->columns)>0 ?
-            implode(',',$this->columns):'*';
-
-        $sql = sprintf('SELECT %s FROM %s where %s ',$columns,$this->table,$conditions);
-
-        return $sql;
+        return $statement->fetch();
     }
 
-    public function query()
+    /**
+     *
+     */
+    public function query($query)
     {
-        // TODO: Implement query() method.
+        $this->databaseConnection->query($query);
     }
 
-    public function select($table, $columns, $conditions)
-    {
-        // TODO: Implement select() method.
-    }
 
-    public function setTable($table)
-    {
-        $this->table = $table;
-    }
+
+
 }
