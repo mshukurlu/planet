@@ -6,9 +6,19 @@ use PDO;
 
 class MysqliDatabaseConnection implements IDatabaseConnection {
 
+    /**
+     * @var false|\mysqli
+     */
     private $connection;
 
+    /**
+     * @var null
+     */
     private static $instance = null;
+
+    /**
+     * MysqliDatabaseConnection constructor.
+     */
     private function __construct()
     {
         try {
@@ -18,6 +28,9 @@ class MysqliDatabaseConnection implements IDatabaseConnection {
         }
         }
 
+    /**
+     * @return MysqliDatabaseConnection|null
+     */
     public static function getInstance()
     {
        if(!self::$instance)
@@ -27,6 +40,9 @@ class MysqliDatabaseConnection implements IDatabaseConnection {
      return self::$instance;
     }
 
+    /**
+     * @return false|\mysqli
+     */
     public function connection()
     {
         return $this->connection;

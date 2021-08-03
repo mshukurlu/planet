@@ -6,9 +6,19 @@ use PDO;
 
 class PdoDatabaseConnection implements IDatabaseConnection {
 
+    /**
+     * @var PDO
+     */
     private $connection;
 
+    /**
+     * @var null
+     */
     private static $instance = null;
+
+    /**
+     * PdoDatabaseConnection constructor.
+     */
     private function __construct()
     {
         try {
@@ -18,6 +28,9 @@ class PdoDatabaseConnection implements IDatabaseConnection {
         }
         }
 
+    /**
+     * @return PdoDatabaseConnection|mixed|null
+     */
     public static function getInstance()
     {
        if(!self::$instance)
@@ -27,6 +40,9 @@ class PdoDatabaseConnection implements IDatabaseConnection {
      return self::$instance;
     }
 
+    /**
+     * @return mixed|PDO
+     */
     public function connection()
     {
         return $this->connection;
