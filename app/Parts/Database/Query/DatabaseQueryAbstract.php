@@ -7,10 +7,11 @@ namespace App\Parts\Database\Query;
 use App\Parts\Database\Query\Traits\BasicHelperMethods;
 use App\Parts\Database\Query\Traits\CompileSql;
 use App\Parts\Database\Query\Traits\ConditionFunctions;
+use App\Parts\Database\Query\Traits\PdoMethods;
 
 abstract class DatabaseQueryAbstract
 {
-    use CompileSql,ConditionFunctions,BasicHelperMethods;
+    use CompileSql,ConditionFunctions,BasicHelperMethods,PdoMethods;
 
     /**
      * @var mixed
@@ -22,16 +23,25 @@ abstract class DatabaseQueryAbstract
      * @var array|mixed
      */
     protected $databaseConnection=null,$table,$where=[];
+
     /**
      * @var array
      */
     /**
-     * @var array
+     * @var array|null
      */
     /**
-     * @var array
+     * @var array|null
      */
-    protected $params = [],$columns = [],$limit=null,$offset=null,$order=array('column'=>null,'direction'=>'desc');
+    /**
+     * @var array|null
+     */
+    protected $params = [],
+        $columns = [],
+        $limit=null,
+        $offset=null,
+        $order=array('column'=>null,'direction'=>'desc');
+
     private $sqlQuery = null;
 
     /**
@@ -42,18 +52,14 @@ abstract class DatabaseQueryAbstract
         return $this->where('id', '=', $id)->limit(1)->first();
     }
 
-    public function prepareStatement($statement,$params)
-    {
-        $statement = $this->databaseConnection->prepare($statement);
 
-        foreach ($params as $param)
-        {
-            $statement->bindParam($param['param'],$param['value']);
-        }
-        $statement->execute();
-
-        return $statement;
-    }
+    /**
+     * @return mixed
+     */
     public abstract function get();
+
+    /**
+     * @return mixed
+     */
     public abstract function first();
 }
