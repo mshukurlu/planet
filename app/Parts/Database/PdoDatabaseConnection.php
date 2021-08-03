@@ -22,7 +22,8 @@ class PdoDatabaseConnection implements IDatabaseConnection {
     private function __construct()
     {
         try {
-            $this->connection = new PDO('mysql:host=localhost;dbname=planet', 'root', '');
+            $this->connection = new PDO('mysql:host='.$_ENV['DB_HOST'].';dbname='.$_ENV['DB_DATABASE'],
+                $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
         }catch (\Exception $exception){
             print_r($exception);
         }

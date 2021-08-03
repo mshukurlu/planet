@@ -30,7 +30,8 @@ Route::get('/db-test',function (){
 });
 Route::get('/murad',function ()
 {
-    echo 'Salam';
+   // echo 'Salam';
+
 });
 
 Route::get('/home','MainController@index');
