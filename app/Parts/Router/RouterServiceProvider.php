@@ -6,7 +6,7 @@ class RouterServiceProvider extends ServiceProvider
 {
     public function mapWebRoutes()
     {
-        include (BASE_DIR.'/../routes/web.php');
+        include (BASE_DIR.'routes/web.php');
     }
 
     public function routes()

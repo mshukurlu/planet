@@ -18,4 +18,7 @@ trait PdoMethods
 
         return $statement;
     }
+
+
+
 }

@@ -2,6 +2,9 @@
 namespace App\Parts\Router;
 
 use App\Controllers\Controller;
+use App\Middleware\CsrfMiddleware;
+use App\Parts\Middleware\Middleware;
+use App\Parts\Security\Csrf\CsrfHandler;
 
 
 class Route
@@ -22,6 +25,10 @@ class Route
     public static function execude()
     {
         $request_path = request_uri();
+        if(request_method()=='POST') {
+            Middleware::add('csrf_checker', CsrfMiddleware::class);
+        }
+        Middleware::applyMiddlewares();
         foreach (self::$routes[request_method()] as $route)
         {
             $routePath = explode('/',$route['path']);

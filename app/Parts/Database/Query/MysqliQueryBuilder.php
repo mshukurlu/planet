@@ -5,9 +5,10 @@ namespace App\Parts\Database\Query;
 
 
 use App\Parts\Database\DatabaseConnection;
+use App\Parts\Database\MysqliDatabaseConnection;
 use App\Parts\Database\PdoDatabaseConnection;
 
-class PdoQueryBuilder extends DatabaseQueryAbstract implements IQuery
+class MysqliQueryBuilder extends DatabaseQueryAbstract implements IQuery
 {
     /**
      * PdoQueryBuilder constructor.
@@ -15,7 +16,7 @@ class PdoQueryBuilder extends DatabaseQueryAbstract implements IQuery
     public function __construct()
     {
         $this->databaseConnection = (new DatabaseConnection(
-            PdoDatabaseConnection::getInstance()))
+            MysqliDatabaseConnection::getInstance()))
                                         ->connect();
     }
 
@@ -26,7 +27,7 @@ class PdoQueryBuilder extends DatabaseQueryAbstract implements IQuery
     public function all($table)
     {
         $query = $this->databaseConnection->query(sprintf("SELECT * FROM %s",$table));
-        return $query->fetchAll();
+        return $query->fetch_all();
     }
 
 
@@ -39,7 +40,7 @@ class PdoQueryBuilder extends DatabaseQueryAbstract implements IQuery
       $this->columns  = $columns;
       $getCompiledSql = $this->compileSelectSql();
 
-      $statement = $this->preparePdoStatement($getCompiledSql,$this->params);
+      $statement = $this->prepareStatement($getCompiledSql,$this->params);
 
       return $statement->fetchAll();
     }
@@ -49,7 +50,7 @@ class PdoQueryBuilder extends DatabaseQueryAbstract implements IQuery
         $this->columns  = $columns;
         $getCompiledSql = $this->compileSelectSql();
 
-        $statement = $this->preparePdoStatement($getCompiledSql,$this->params);
+        $statement = $this->prepareStatement($getCompiledSql,$this->params);
 
         return $statement->fetch();
     }
