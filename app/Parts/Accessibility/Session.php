@@ -28,6 +28,14 @@ class Session
     }
     public static function kill($key)
     {
+        if(is_array($key))
+        {
+            foreach ($key as $item)
+            {
+                unset($_SESSION[$item]);
+            }
+            return  true;
+        }
              unset($_SESSION[$key]);
              return true;
     }

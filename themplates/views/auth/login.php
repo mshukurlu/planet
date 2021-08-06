@@ -4,8 +4,9 @@
 </head>
 <body>
 <form action="" method="POST">
+    <?php include_view('errors'); ?>
     <p>Login </p>
-    <p><input name="login" type="text" value=""></p>
+    <p><input name="email" type="text" value=""></p>
     <p>Password</p>
     <p><input type="password" name="password"></p>
     <button>Log in</button>
