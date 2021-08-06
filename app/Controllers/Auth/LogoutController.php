@@ -8,6 +8,9 @@ use App\Parts\Response\Redirect;
 
 class LogoutController
 {
+    /**
+     *
+     */
     public function logout()
     {
         if(Auth::logout())

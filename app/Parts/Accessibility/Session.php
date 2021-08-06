@@ -6,10 +6,18 @@ namespace App\Parts\Accessibility;
 
 class Session
 {
+    /**
+     * @param $key
+     * @return mixed|null
+     */
     public static function get($key){
         return self::has($key) ? $_SESSION[$key]: null;
     }
 
+    /**
+     * @param $key
+     * @return bool
+     */
     public static function has($key)
     {
         if(isset($_SESSION[$key]))
@@ -20,12 +28,22 @@ class Session
         return false;
     }
 
-    public static function add($key,$value)
+    /**
+     * @param $key
+     * @param $value
+     * @return mixed
+     */
+    public static function add($key, $value)
     {
         $_SESSION[$key] = $value;
 
         return $value;
     }
+
+    /**
+     * @param $key
+     * @return bool
+     */
     public static function kill($key)
     {
         if(is_array($key))

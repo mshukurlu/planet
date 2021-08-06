@@ -4,16 +4,30 @@
 namespace App\Parts\Middleware;
 
 
+/**
+ * Class Middleware
+ * @package App\Parts\Middleware
+ */
 class Middleware
 {
-      protected static $middlewares = [];
+    /**
+     * @var array
+     */
+    protected static $middlewares = [];
 
-      public static function add($name,$closure)
+    /**
+     * @param $name
+     * @param $closure
+     */
+    public static function add($name, $closure)
       {
           static::$middlewares[] = ['name'=>$name,'closure'=>$closure];
       }
 
-      public static function applyMiddlewares()
+    /**
+     *
+     */
+    public static function applyMiddlewares()
       {
             foreach (self::$middlewares as $middleware)
             {

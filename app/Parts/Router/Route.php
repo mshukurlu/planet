@@ -9,10 +9,22 @@ use App\Parts\Security\Csrf\CsrfHandler;
 
 class Route
 {
+    /**
+     * @var array
+     */
     protected static $routes = [];
 
+    /**
+     * @var string[]
+     */
     protected static $allowableMethods = ['GET','POST','DELETE','PUT'];
 
+    /**
+     * @param $method
+     * @param $parameters
+     * @return array
+     * @throws \ErrorException
+     */
     public static function __callStatic($method, $parameters)
     {
         if(in_array(strtoupper($method),self::$allowableMethods)) {
@@ -22,6 +34,9 @@ class Route
         throw  new \ErrorException('Qeyd edilən methodun istifadə edilməsinə icazə yoxdur!');
     }
 
+    /**
+     * @return mixed|void
+     */
     public static function execude()
     {
         $request_path = request_uri();
