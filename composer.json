@@ -1,6 +1,7 @@
 {
     "name": "mshukurlu/planet",
     "description": "A new framework",
+    "type": "library",
     "authors": [
         {
             "name": "Murad Shukurlu",
